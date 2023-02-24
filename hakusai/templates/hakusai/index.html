@@ -1,1 +1,13 @@
-<pre>Hello World</pre>
+{% extends 'hakusai/base.html' %}
+{% load static %}
+
+{% block title %} TOP {% endblock %}
+
+{% block content %}
+<div class="text-center m-5">
+    <div class="bg-gray-400 p-2 inline-block rounded">
+        <div class="text-xl font-bold">Hello World</div>
+    </div>
+</div>
+
+{% endblock %}
