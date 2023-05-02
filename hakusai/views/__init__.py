@@ -1,1 +1,11 @@
 from .IndexViewClass import IndexView as IndexView
+
+from .ExhibitionListViewClass import ExhibitionListView as ExhibitionListView
+from .ExhibitionDetailViewClass import ExhibitionDetailView as ExhibitionDetailView
+from .ExhibitionNewViewClass import ExhibitionNewView as ExhibitionNewView
+from .ExhibitionRunViewClass import ExhibitionRunView as ExhibitionRunView
+
+from .ProjectListViewClass import ProjectListView as ProjectListView
+from .ProjectNewSummaryViewClass import ProjectNewSummaryView as ProjectNewSummaryView
+from .ProjectNewStepViewClass import ProjectNewStepView as ProjectNewStepView
+from .ProjectEditViewClass import ProjectEditView as ProjectEditView
