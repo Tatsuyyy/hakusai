@@ -10,7 +10,10 @@
     <!-- <link href="{% static 'hakusai/css/style.min.css' %}" rel="stylesheet"> -->
 </head>
 
-<body class="h-full w-full">
+{% block additional %}
+{% endblock %}
+
+<body class="h-full w-full bg-green-50">
     {% block content %}
     {% endblock %}
 </body>
