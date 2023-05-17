@@ -1,0 +1,21 @@
+{% extends 'hakusai/base.html' %}
+
+{% block additional %}
+<!-- ヘッダー -->
+    <div class="flex space-x-6 items-center justify-start h-40 mx-20 sticky top-0 z-50 bg-green-50">
+        <!-- ヘッダーアイコン -->
+        {% block content_header_icon %}{% endblock %}
+
+        <!-- ヘッダータイトル -->
+        <p class="w-60 text-2xl leading-10 text-gray-600">
+            {% with content_header_title=title %}{{ content_header_title }}{% endwith %}
+        </p>
+
+        <!-- ヘッダー要素(ボタン等) -->
+        {% block content_header_item %}{% endblock %}
+    </div>
+
+{% endblock %}
+    <!-- ページコンテンツ -->
+    {% block content %}{% endblock %}
+</body>

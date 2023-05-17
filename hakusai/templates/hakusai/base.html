@@ -1,15 +1,21 @@
 {% load static %}
 
-<html lang="ja" class="h-full">
+<html lang="ja" class="h-full w-full">
 
-<head>
+    
+    <head>
     <meta charset="UTF-8" />
     <title>Hakusai | {% block title %}{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- <link href="{% static 'hakusai/css/style.min.css' %}" rel="stylesheet"> -->
 </head>
 
-<body class="h-full">
+{% block additional %}
+{% endblock %}
+
+<body class="h-full w-full bg-green-50">
     {% block content %}
     {% endblock %}
 </body>
+
+</html>

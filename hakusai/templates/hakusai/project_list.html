@@ -1,9 +1,38 @@
-{% extends 'hakusai/base.html' %}
-{% load static %}
+{% extends 'hakusai/base_with_header.html' %}
 
-{% block title %} TOP {% endblock %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content_header_icon %} 
+<svg class="w-10 h-10 rounded-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+    <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
+</svg>
+{% endblock %}
+
+{% block content_header_item %}
+    <a class="px-4 py-2 text-lg text-center text-gray-100 bg-blue-500 shadow rounded-2xl hover:opacity-80"
+        href="{% url 'hakusai:project_new_summary' %}">
+        新規作成
+    </a> 
+{% endblock %}
 
 {% block content %}
-
-
+<div class="w-3/4 m-auto">
+    <div class="grid grid-cols-1 gap-2">
+        {% for project in projects %}
+        <a class="col-span-1 flex flex-col space-y-3 items-start p-5 bg-gray-50 border rounded-2xl border-gray-400 hover:opacity-80"
+            href="{% url 'hakusai:project_edit' project_id=project.id %}">
+            
+            <div class="flex space-x-3">
+                <p class="text-xl text-gray-700">{{ project.title }}</p>
+                {% if project.draft_flag %}
+                <div class="bg-gray-400"><p class="w-full px-2 py-1 text-center text-gray-50">下書き</p></div>
+                {% endif %}
+            </div>
+            
+            <p class="text-lg text-center text-gray-600">{{ project.url }}</p>
+        </a>
+        {% endfor %}
+    
+    </div>
+</div>
 {% endblock %}
