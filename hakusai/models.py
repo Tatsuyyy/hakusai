@@ -49,3 +49,27 @@ class ExhibitionSettings(Model):
 
     class Meta:
         db_table = 'exhibition_settings'
+
+# DBView
+class VProjectSteps(Model):
+    project_id = models.BigIntegerField(primary_key=True)
+    exec_order = models.PositiveIntegerField()
+    xpath = models.CharField(max_length=200)
+    action_name = models.CharField(max_length=100)
+    action_str = models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        managed = False
+        db_table = 'project_steps'
+
+class VExhibitionList(Model):
+    exhibitions_id = models.BigIntegerField(primary_key=True)
+    project_id = models.BigIntegerField()
+    repeat = models.PositiveIntegerField()
+    url = models.CharField(max_length=300)
+    exec_order = models.PositiveIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'exhibition_list'
+
