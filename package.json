@@ -1,0 +1,19 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npx nodemon watch.js --watch ./**/templates/**/*.html -e html",
+    "build": "npx tailwindcss -c ./tailwind.config.js ./static/hakusai/css/tailwind.css -o ./static/hakusai/css/style.css && cleancss -o ./static/hakusai/css/style.min.css ./static/hakusai/css/style.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.4.13",
+    "clean-css-cli": "^5.6.2",
+    "nodemon": "^2.0.22",
+    "tailwindcss": "^3.2.7"
+  }
+}

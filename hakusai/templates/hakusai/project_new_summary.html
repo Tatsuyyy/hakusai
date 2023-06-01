@@ -1,9 +1,49 @@
-{% extends 'hakusai/base.html' %}
-{% load static %}
+{% extends 'hakusai/base_with_header.html' %}
 
-{% block title %} TOP {% endblock %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content_header_icon %} 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+    <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+</svg>
+
+{% endblock %}
+
+{% block content_header_item %}
+<!-- なし -->
+{% endblock %}
+
 
 {% block content %}
+<div class="w-3/5 h-3/5 absolute left-1/5 bg-gray-50 border rounded-2xl border-gray-400">
+    <form class="h-full" method="POST">
+        {% csrf_token %}
+        <div class="h-full flex flex-col justify-evenly p-4">
+            <div class="text-xl">
+                <div class="flex mb-8">
+                <p class="w-1/6 font-bold text-gray-500 text-center p-3">プロジェクト名</p>
+                <input name="project-name" class="w-3/4 bg-white border rounded border-gray-300 text-gray-500 mx-2 p-3" placeholder="プロジェクト1" />
+            </div>
+        <div class="flex">
+            <p class="w-1/6 font-bold text-gray-500 text-center p-3">URL</p>
+            <div class="w-3/4">
+                <input name="project-url" class="w-full bg-white border rounded border-gray-300 text-gray-500 mx-2 p-3" placeholder="http://localhost:8000" />
+                <p class="text-sm leading-tight text-gray-400 font-bold p-3">localhostの場合はポート番号まで入力してください。</p>
+            </div>
+        </div>
+    </div>
 
-
+    <div class="flex w-9/12 mx-auto justify-evenly">
+        <a class="px-16 py-2 text-lg text-center text-gray-700 bg-gray-300 shadow rounded-2xl hover:opacity-80"
+        href="{% url 'hakusai:project_list' %}">
+        キャンセル
+    </a>   
+        <button type="submit" class="px-16 py-2 text-lg text-center text-gray-100 bg-blue-500 shadow rounded-2xl hover:opacity-80">
+        次へ
+        </button>
+    </div>
+</div>
+</form>
+</div>
+    
 {% endblock %}
