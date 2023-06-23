@@ -1,6 +1,8 @@
 from typing import Any, Dict
 from django import http
 from django.views.generic import TemplateView
+from hakusai.models import Projects
+from django.shortcuts import redirect
 
 
 class ProjectNewSummaryView(TemplateView):
@@ -8,12 +10,10 @@ class ProjectNewSummaryView(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        context['title'] = '新規プロジェクト'
         return context
     
-    # POST送信を受け取る
     def post(self, request: http.HttpRequest, *args: Any, **kwargs: Any) -> http.HttpResponse:
-        # メモ(最終的には消してね)
-        # postで値送信を受け取り(request.POSTを要確認)、それを使ってDBに新規プロジェクトを作成する。
-        # 新規作成されたプロジェクトのidを使ってreturnでステップ登録ページに遷移する
-        return super().get(request, *args, **kwargs)
-
+        new_project = Projects(name=request.POST["project-name"], url=request.POST["project-url"])
+        new_project.save()
+        return redirect('hakusai:project_new_step', project_id=new_project.id)
