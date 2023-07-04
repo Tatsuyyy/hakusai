@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=100, verbose_name="アクション名")),
             ],
-            options={"db_table": "actions",},
+            options={"db_table": "actions"},
         ),
         migrations.CreateModel(
             name="Exhibitions",
@@ -42,8 +42,12 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=100, verbose_name="展示名")),
                 ("memo", models.CharField(max_length=300, verbose_name="メモ")),
                 ("created_date_time", models.DateTimeField(verbose_name="作成日時")),
+                (
+                    "delete_flag",
+                    models.BooleanField(default=False, verbose_name="削除フラグ"),
+                ),
             ],
-            options={"db_table": "exhibitions",},
+            options={"db_table": "exhibitions"},
         ),
         migrations.CreateModel(
             name="Projects",
@@ -63,8 +67,12 @@ class Migration(migrations.Migration):
                     "draft_flag",
                     models.BooleanField(default=False, verbose_name="下書きフラグ"),
                 ),
+                (
+                    "delete_flag",
+                    models.BooleanField(default=False, verbose_name="削除フラグ"),
+                ),
             ],
-            options={"db_table": "projects",},
+            options={"db_table": "projects"},
         ),
         migrations.CreateModel(
             name="Steps",
@@ -101,7 +109,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "steps",},
+            options={"db_table": "steps"},
         ),
         migrations.CreateModel(
             name="ExhibitionSettings",
@@ -135,6 +143,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"db_table": "exhibition_settings",},
+            options={"db_table": "exhibition_settings"},
         ),
     ]
