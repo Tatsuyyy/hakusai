@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "npx nodemon watch.js --watch ./**/templates/**/*.html -e html",
-    "build": "npx tailwindcss -c ./tailwind.config.js ./static/hakusai/css/tailwind.css -o ./static/hakusai/css/style.css && cleancss -o ./static/hakusai/css/style.min.css ./static/hakusai/css/style.css --watch"
+    "build": "npx tailwindcss -c ./tailwind.config.js ./static/hakusai/css/tailwind.css -o ./static/hakusai/css/style.css && cleancss -o ./static/hakusai/css/style.min.css ./static/hakusai/css/style.css"
   },
   "keywords": [],
   "author": "",

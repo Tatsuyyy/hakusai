@@ -9,18 +9,18 @@ class Migration(migrations.Migration):
     ]
 
     insert_sql = """
-    INSERT INTO projects(name, url, draft_flag) VALUES('サンプルプロジェクト1', 'http://localhost:8000', false);
-    INSERT INTO projects(name, url, draft_flag) VALUES('サンプルプロジェクト2', 'http://localhost:8000', false);
-    INSERT INTO projects(name, url, draft_flag) VALUES('サンプルプロジェクト3', 'http://localhost:3000', false);
-    INSERT INTO projects(name, url, draft_flag) VALUES('サンプルプロジェクト4', 'http://localhost:8888', true);
+    INSERT INTO projects(name, url, draft_flag, delete_flag) VALUES('サンプルプロジェクト1', 'http://localhost:8000', false, false);
+    INSERT INTO projects(name, url, draft_flag, delete_flag) VALUES('サンプルプロジェクト2', 'http://localhost:8000', false, false);
+    INSERT INTO projects(name, url, draft_flag, delete_flag) VALUES('サンプルプロジェクト3', 'http://localhost:3000', false, false);
+    INSERT INTO projects(name, url, draft_flag, delete_flag) VALUES('サンプルプロジェクト4', 'http://localhost:8888', true, false);
 
     INSERT INTO steps(xpath, action_id, exec_order, project_id) VALUES('sample/div/ul/li[2]/button', 1, 1, 1);
     INSERT INTO steps(xpath, action_id, action_str, exec_order, project_id) VALUES('sample/div/ul/li[2]/input', 2, 'sample', 2, 1);
     INSERT INTO steps(xpath, action_id, exec_order, project_id) VALUES('sample/div/button', 1, 3, 1);
 
-    INSERT INTO exhibitions(name, memo, created_date_time) VALUES('サンプル展示1', 'メモメモメモ', date('2000-09-18'));
-    INSERT INTO exhibitions(name, memo, created_date_time) VALUES('サンプル展示2', 'メモメモメモ2', date('2000-09-18'));
-    INSERT INTO exhibitions(name, memo, created_date_time) VALUES('サンプル展示3', 'メモメモメモ3', date('2000-09-18'));
+    INSERT INTO exhibitions(name, memo, created_date_time, delete_flag) VALUES('サンプル展示1', 'メモメモメモ', date('2000-09-18'), false);
+    INSERT INTO exhibitions(name, memo, created_date_time, delete_flag) VALUES('サンプル展示2', 'メモメモメモ2', date('2000-09-18'), false);
+    INSERT INTO exhibitions(name, memo, created_date_time, delete_flag) VALUES('サンプル展示3', 'メモメモメモ3', date('2000-09-18'), false);
 
     INSERT INTO exhibition_settings(exhibition_id, project_id, repeat, exec_order) VALUES(1, 1, 1, 1);
     INSERT INTO exhibition_settings(exhibition_id, project_id, repeat, exec_order) VALUES(1, 2, 2, 2);
