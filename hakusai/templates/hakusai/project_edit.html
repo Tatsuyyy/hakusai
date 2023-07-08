@@ -1,9 +1,108 @@
-{% extends 'hakusai/base.html' %}
+{% extends 'hakusai/base_with_header.html' %}
 {% load static %}
 
-{% block title %} TOP {% endblock %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content_header_icon %}
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+    class="w-6 h-6 pointer-events-none">
+    <path stroke-linecap="round" stroke-linejoin="round"
+        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+</svg>
+{% endblock %}
+
+{% block content_header_item %}
+<!-- なし -->
+{% endblock %}
 
 {% block content %}
+<div class="w-full flex justify-center m-auto mb-8 text-2xl">
+        <p class="font-bold text-gray-600 mx-2 py-2">{{ project_name }}</p>
+        <div class="w-1/6 py-2">
+            <p class="font-bold text-gray-600 text-right">URL:</p>
+        </div>
+        <p class="font-bold text-gray-600 mx-2 py-2">{{ project_url }}</p>
+</div>
 
+<form id="js-step-form" method="POST">
+    <div id="js-step-parent" class="w-7/12 mx-auto mb-8">
+        {% for step in steps %}
+        <div class="flex space-y-3 justify-between py-2 px-4 mb-4 bg-gray-50 border rounded-2xl border-gray-400 relative">
+            <div class="w-full">
+                <div id="js-step{{ step.exec_order }}-up" class="js-order-up w-max bg-gray-700 hover:bg-gray-500 text-gray-100 rounded-3xl border p-1 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 pointer-events-none">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+                </svg>
+            </div>
+                <div class="w-full flex mt-2 mb-4 text-xl">
+                    <p id="js-step{{ step.exec_order }}-order" class="text-gray-700">step{{ step.exec_order }}:</p>
+                    <select id="js-step{{ step.exec_order }}-action-name" name="step{{ step.exec_order }}-action-name" onchange="handleSelectChange(event)" class="border border-gray-300 rounded mx-2">
+                        <option value="{{ step.action_name }}" selected class="text-gray-400" >{{ step.action_name }}</option>
+                        {% for action in actions %}
+                        {{ action }}
+                        <option value="{{ action }}" class="text-gray-700">{{ action }}</option>
+                        {% endfor %}
+                    </select>
+    
+                    <p class="text-gray-700 mx-2">
+                        {% if step.action_str is not None %}
+                        <input id="js-step{{ step.exec_order }}-action-str" name="step{{ step.exec_order }}-action-str" class="w-5/6 bg-white border rounded border-gray-300 mx-2" placeholder="{{ step.action_str }}" value="{{ step.action_str }}" />
+                        {% else %}
+                        <input disabled id="js-step{{ step.exec_order }}-action-str" name="step{{ step.exec_order }}-action-str" class="w-5/6 bg-white border rounded border-gray-300 mx-2" placeholder="-" />
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="w-full flex my-2 text-lg">
+                    <p class="text-gray-700">xpath:</p>
+                    <input id="js-step{{ step.exec_order }}-xpath" name="step{{ step.exec_order }}-xpath" class="w-5/6 bg-white border rounded border-gray-300 mx-2" placeholder="{{ step.xpath }}" value="{{ step.xpath }}" />
+                    <div id="js-help-xpath" class="relative group" >
+                        <p class="text-sm whitespace-nowrap rounded bg-black px-2 py-1 text-white absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition pointer-events-none">xpathの取得方法</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 pointer-events-none transition ">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div id="js-step{{ step.exec_order }}-edit" class="js-step-operation cursor-pointer">
+                <div class="hidden">
+                    <div class="flex flex-col items-center absolute w-1/12 top-2 z-10">
+                    <div id="js-step{{ step.exec_order }}-delete" class= "js-step-delete cursor-pointer bg-gray-50 hover:bg-gray-200 py-1.5 px-2 rounded border text-red-600">
+                        <p class="pointer-events-none">削除</p>
+                    </div>
+                </div>
+                    
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 pointer-events-none">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                </svg>
+
+            </div>
+        </div>
+        {% endfor %}
+
+        <div id="js-add-step" class="flex space-y-3 justify-between py-2 px-4 mb-4 bg-gray-50 border rounded-2xl border-gray-400 hover:opacity-80 text-gray-700">
+            <div  class="m-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 pointer-events-none">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex w-9/12 mx-auto mb-16 justify-evenly">
+        <button id="js-cancel-button" type="submit" name="submit-type" value="cancel"  class="px-16 py-2 text-lg text-center text-gray-700 bg-gray-300 shadow rounded-2xl hover:opacity-80">
+            削除して戻る
+        </button>
+        <button type="submit" name="submit-type" value="draft" class="px-16 py-2 text-lg text-center text-gray-100 bg-green-500 shadow rounded-2xl hover:opacity-80">
+            下書き保存
+        </button>
+        <button type="submit" name="submit-type" value="submit" class="px-16 py-2 text-lg text-center text-gray-100 bg-blue-500 shadow rounded-2xl hover:opacity-80">
+            更新
+        </button>
+    </div>
+    {% csrf_token %}
+</form>
+<script src="{% static 'hakusai/js/project_edit.js' %}"></script>
 
 {% endblock %}
