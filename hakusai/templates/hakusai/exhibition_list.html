@@ -1,9 +1,39 @@
-{% extends 'hakusai/base.html' %}
+{% extends 'hakusai/base_with_sticky_header.html' %}
 {% load static %}
 
-{% block title %} TOP {% endblock %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content_header_icon %} 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+    </svg>
+{% endblock %}
+
+{% block content_header_item %}
+    <a class="px-4 py-2 text-lg text-center text-gray-100 bg-blue-500 shadow rounded-2xl hover:opacity-80"
+        href="{% url 'hakusai:exhibition_new' %}">
+        新規作成
+    </a> 
+{% endblock %}
+
 
 {% block content %}
-
-
+<div class="w-3/4 m-auto">
+    <div class="grid grid-cols-1 gap-2">
+        {% for exhibition in exhibitions %}
+        <a class="col-span-1 flex flex-col space-y-3 items-start p-5 bg-gray-50 border-b-8 rounded-2xl hover:opacity-80"
+            href="{% url 'hakusai:exhibition_detail' exhibition_id=exhibition.id %}">
+            
+            <div class="flex w-full justify-between space-x-3">
+                <p class="text-xl text-gray-700">{{ exhibition.name }}</p>
+                <p class="text-sm text-gray-600">{{ exhibition.created_date_time }}</p>
+            </div>
+            
+            <p class="text-lg text-center text-gray-600">{{ exhibition.memo }}</p>
+        </a>
+        {% endfor %}
+    
+    </div>
+</div>
 {% endblock %}

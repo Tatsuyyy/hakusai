@@ -31,6 +31,7 @@ class Exhibitions(Model):
     name = models.CharField(max_length=100, verbose_name='展示名')
     memo = models.CharField(max_length=300, verbose_name='メモ')
     created_date_time = models.DateTimeField(verbose_name='作成日時')
+    delete_flag = models.BooleanField(default=False, verbose_name='削除フラグ')
 
     def save(self, *args, **kwargs):
         if not self.id:
