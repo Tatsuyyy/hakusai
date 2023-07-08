@@ -1,9 +1,62 @@
-{% extends 'hakusai/base.html' %}
+{% extends 'hakusai/base_with_sticky_header.html' %}
 {% load static %}
 
-{% block title %} TOP {% endblock %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content_header_icon %} 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+    </svg>
+{% endblock %}
+
+{% block content_header_item %}
+<!-- なし -->
+{% endblock %}
+
 
 {% block content %}
+<div class="w-3/4 m-auto">
+    <p class="text-lg text-gray-700 font-bold">{{ exhibition.name }}</p>
+    <div class="flex flex-col items-center">
+        {% for project in exhibition_projects %}
+        <div class="bg-gray-50 w-3/4 rounded-2xl border border-gray-200 p-4 mx-auto">
+            <div class="flex justify-between">
+                <div class="flex w-4/5">
+                    <p class="text-gray-700 text-lg px-1">{{ project.project_name }}</p>
+                    <p class="text-gray-700 text-lg px-1">{{ project.url }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-700 text-lg">繰り返し回数:{{ project.repeat }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="py-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75" />
+            </svg>
+        </div>
+        {% endfor %}
+        <div class="bg-gray-50 w-1/5 rounded-2xl border border-gray-200 p-4 mx-auto text-center">
+            <p class="text-gray-700 text-lg">ループ</p>
+        </div>
+        
+            <div class="flex w-9/12 mx-auto justify-evenly pt-8">
+                <a class="px-16 py-2 text-lg text-center text-gray-700 bg-gray-300 shadow rounded-2xl hover:opacity-80"
+                href="{% url 'hakusai:exhibition_list' %}">
+                    キャンセル
+                </a>   
+                <a class="px-16 py-2 text-lg text-center font-bold text-gray-50 bg-orange-600  shadow rounded-2xl hover:opacity-80 flex items-center"
+                href="{% url 'hakusai:exhibition_run' exhibition_id=exhibition.id %}">
+                <div class="pr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm14.024-.983a1.125 1.125 0 010 1.966l-5.603 3.113A1.125 1.125 0 019 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113z" clip-rule="evenodd" />
+                    </svg>
+                </div>    
+                <p>展示スタート</p>
+                    
+                </a>   
+            </div>
 
-
+    </div>
+</div>
 {% endblock %}
