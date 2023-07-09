@@ -27,9 +27,6 @@ const registerButtonEvents = () => {
         stopButton.setAttribute("disabled", true);
     });
 
-    startButton.children[0].classList.replace(
-      "text-green-500",
-      "text-gray-400"
-    );
+    stopButton.children[0].classList.replace("text-red-600", "text-gray-400");
 
 };
