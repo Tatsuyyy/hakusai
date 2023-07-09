@@ -1,6 +1,6 @@
 from typing import Any, Dict
 from django.views.generic import TemplateView
-from hakusai.models import Exhibitions
+from hakusai.models import Projects, Exhibitions
 
 
 class ExhibitionListView(TemplateView):
@@ -10,4 +10,5 @@ class ExhibitionListView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = '展示一覧'
         context['exhibitions'] = Exhibitions.objects.filter(delete_flag=False)
+        context['projects'] = Projects.objects.filter(delete_flag=False)
         return context
