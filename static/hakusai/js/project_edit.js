@@ -141,6 +141,11 @@ const stepOrderUp = (e) => {
 
 // step削除 
 const stepDelete = (e) => {
+  const stepCount = getStepCount();
+  if(stepCount <= 1){
+    return;
+  }
+
   const parent = document.getElementById("js-step-parent");
   const deleteStepNum = Number(e.target.id.split("-")[1].replace("step", ""));
 
@@ -148,8 +153,7 @@ const stepDelete = (e) => {
   const target = parent.children[deleteStepNum - 1];
   target.remove();
 
-  // 最大値を取得してそこまで1個ずつidを若くする
-  const stepCount = getStepCount();
+  // 最大値まで1個ずつidを若くする
   for (let i = deleteStepNum; i <= stepCount; i++) {
     const shiftElement = parent.children[i - 1];
     setNewId(shiftElement, i + 1, i, false);
