@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
 
     project_step_sql = """
     CREATE VIEW project_steps AS
-    SELECT projects.id AS project_id, steps.exec_order, steps.xpath, actions.name as action_name, steps.action_str 
+    SELECT projects.id AS project_id, steps.exec_order, projects.url AS url, steps.xpath, actions.name as action_name, steps.action_str 
     FROM steps
     LEFT OUTER JOIN actions
     ON steps.action_id = actions.id
