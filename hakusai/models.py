@@ -12,6 +12,7 @@ class Actions(Model):
 class Projects(Model):
     name = models.CharField(max_length=100, verbose_name='プロジェクト名')
     url = models.CharField(max_length=300)
+    delete_flag = models.BooleanField(default=False, verbose_name='削除フラグ')
     draft_flag = models.BooleanField(default=False, verbose_name='下書きフラグ')
 
     class Meta:

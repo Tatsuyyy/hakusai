@@ -35,8 +35,8 @@
             </div>
                 <div class="w-full flex mt-2 mb-4 text-xl">
                     <p id="js-step1-order" class="text-gray-700">step1:</p>
-                    <select id="js-step1-action-name" name="step1-action-name" onchange="handleSelectChange(event)" class="border border-gray-300 rounded mx-2">
-                        <option value="クリック" selected class="text-gray-400" >クリック</option>
+                    <select id="js-step1-action-name" name="step1-action-name" onchange="handleSelectChange(event)" class="border border-gray-300 rounded mx-2" required>
+                        <!--<option value="クリック" selected class="text-gray-400" >クリック</option>-->
                         {% for action in actions %}
                             <option value="{{ action }}" class="text-gray-700">{{ action }}</option>
                         {% endfor %}
@@ -49,7 +49,7 @@
 
                 <div class="w-full flex my-2 text-lg">
                     <p class="text-gray-700">xpath:</p>
-                    <input id="js-step1-xpath" name="step1-xpath" class="w-5/6 bg-white border rounded border-gray-300 mx-2" placeholder="xpathを入力してください" value="" />
+                    <input id="js-step1-xpath" name="step1-xpath" class="w-5/6 bg-white border rounded border-gray-300 mx-2" placeholder="xpathを入力してください" value="" required />
                     <div id="js-help-xpath" class="relative group" >
                         <p class="text-sm whitespace-nowrap rounded bg-black px-2 py-1 text-white absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition pointer-events-none">xpathの取得方法</p>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 pointer-events-none transition ">
@@ -91,7 +91,7 @@
             下書き保存
         </button>
         <button type="submit" name="submit-type" value="submit" class="px-16 py-2 text-lg text-center text-gray-100 bg-blue-500 shadow rounded-2xl hover:opacity-80">
-            更新
+            作成
         </button>
     </div>
     {% csrf_token %}
