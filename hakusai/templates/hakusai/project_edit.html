@@ -37,7 +37,7 @@
                 <div class="w-full flex mt-2 mb-4 text-xl">
                     <p id="js-step{{ step.exec_order }}-order" class="text-gray-700">step{{ step.exec_order }}:</p>
                     <select id="js-step{{ step.exec_order }}-action-name" name="step{{ step.exec_order }}-action-name" onchange="handleSelectChange(event)" class="border border-gray-300 rounded mx-2">
-                        <option value="{{ step.action_name }}" selected class="text-gray-400" >{{ step.action_name }}</option>
+                        <option value="{{ step.action.name }}" selected class="text-gray-400" >{{ step.action.name }}</option>
                         {% for action in actions %}
                         {{ action }}
                         <option value="{{ action }}" class="text-gray-700">{{ action }}</option>
