@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     exhibition_list_sql = """
     CREATE VIEW exhibition_list AS
-    SELECT exhibitions.id AS exhibitions_id, projects.id AS project_id, exhibition_settings.repeat, projects.url, exhibition_settings.exec_order
+    SELECT exhibitions.id AS exhibitions_id, projects.id AS project_id, projects.name AS project_name, exhibition_settings.repeat, projects.url, exhibition_settings.exec_order
     FROM exhibition_settings
     LEFT OUTER JOIN exhibitions
     ON exhibition_settings.exhibition_id = exhibitions.id

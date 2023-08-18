@@ -67,6 +67,7 @@ class VProjectSteps(Model):
 class VExhibitionList(Model):
     exhibitions_id = models.BigIntegerField(primary_key=True)
     project_id = models.BigIntegerField()
+    project_name = models.CharField(max_length=100)
     repeat = models.PositiveIntegerField()
     url = models.CharField(max_length=300)
     exec_order = models.PositiveIntegerField()
