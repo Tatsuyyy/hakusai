@@ -23,15 +23,16 @@ class Steps(Model):
     action = models.ForeignKey('actions', on_delete=models.CASCADE)
     action_str = models.CharField(max_length=100, null=True, blank=True, verbose_name='action用文字列')
     exec_order = models.PositiveIntegerField(verbose_name='順序')
-    project = models.ForeignKey('projects', on_delete=models.CASCADE)
+    project = models.ForeignKey('projects', on_delete=models.CASCADE, null=True)
 
     class Meta:
         db_table = 'steps'
 
 class Exhibitions(Model):
     name = models.CharField(max_length=100, verbose_name='展示名')
-    memo = models.CharField(max_length=300, verbose_name='メモ')
+    memo = models.CharField(max_length=300, null=True, verbose_name='メモ')
     created_date_time = models.DateTimeField(verbose_name='作成日時')
+    delete_flag = models.BooleanField(default=False, verbose_name='削除フラグ')
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -66,6 +67,7 @@ class VProjectSteps(Model):
 class VExhibitionList(Model):
     exhibitions_id = models.BigIntegerField(primary_key=True)
     project_id = models.BigIntegerField()
+    project_name = models.CharField(max_length=100)
     repeat = models.PositiveIntegerField()
     url = models.CharField(max_length=300)
     exec_order = models.PositiveIntegerField()
