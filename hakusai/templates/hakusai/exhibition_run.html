@@ -17,6 +17,14 @@
 
 {% block content %}
     <div class="rounded-r-3xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-50 w-3/5 h-2/3 flex flex-col justify-evenly items-center">
+        <div>
+            <p class="text-base text-gray-800">まず以下のURLでアプリケーションを全て起動してください。</p>
+            <p class="text-sm text-gray-600">
+                {% for url in project_urls %}
+                [ {{ url }} ]
+                {% endfor %}
+            </p>
+        </div>
         <p class="text-xl text-gray-700">{{ exhibition.name }}<span id="js-exhibition-status">を停止中</span></p>
         <div class="w-full flex justify-evenly">
             <button id="js-start-button" class="text-center hover:opacity-80" >
@@ -35,5 +43,10 @@
         </div>
     </div>
 
-    <script src="{% static 'hakusai/js/exhibition_run.js' %}"></script>
+    <script>
+        const endPoint = "{% url 'hakusai:exhibition_run' exhibition_id=exhibition.id %}";
+    </script>
+    <script src="{% static 'hakusai/js/exhibition_run.js' %}">
+    </script>
+
 {% endblock %}
