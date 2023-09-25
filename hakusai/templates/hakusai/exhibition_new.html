@@ -1,9 +1,94 @@
-{% extends 'hakusai/base.html' %}
+{% extends 'hakusai/base_with_header.html' %}
 {% load static %}
 
-{% block title %} TOP {% endblock %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block content_header_icon %} 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+    <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z" />
+</svg>
+{% endblock %}
+
+{% block content_header_item %}
+<!-- なし -->
+{% endblock %}
+
 
 {% block content %}
+<form id="js-exhibition-form" method="POST">
+    <div class="w-4/5 mx-auto mb-4">
+        <div class="flex justify-center flex-col items-center">
+            <div class="w-full flex justify-center mb-4">
+                <p class="text-xl p-2 w-1/12">展示名</p><input class="text-xl w-3/5 p-2 border border-gray-600" id="js-exhibition-name" name="exhibition-name" type="text" placeholder="展示1" />
+            </div>
+                <div class="w-full flex justify-center">
+                <p class="text-xl p-2 w-1/12">メモ(任意)</p><input class="text-xl w-3/5 p-2 border border-gray-600" id="js-exhibition-memo" name="exhibition-memo" type="text" placeholder="メモ" />
+            </div>
+        </div>
+    </div>
+    <div id="js-exhibition-parent" class="w-7/12 mx-auto mb-8">
+        <div class="flex space-y-3 justify-between py-2 px-4 mb-4 bg-gray-50 border rounded-2xl border-gray-400 relative">
+            <div class="w-full">
+                <div id="js-exhibition1-up" class="js-order-up w-max bg-gray-700 hover:bg-gray-500 text-gray-100 rounded-3xl border p-1 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 pointer-events-none">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+                </svg>
+            </div>
+            <div class="w-full flex items-center mt-2 mb-4 text-xl">
+                    <p id="js-exhibition1-order" class="text-gray-700 text-xl">1.</p>    
+                    <select id="js-exhibition1-project-name" name="exhibition1-project-name" class="border border-gray-300 rounded mx-10 px-4">
+                        {% for project in projects %}
+                            <option value="{{ project.name }}" class="text-gray-700">{{ project.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="flex items-center">
+                        <p class="text-gray-700 text-sm ml-2">繰り返し回数:</p>
+                        <p class="text-gray-700 mx-2">
+                            <input id="js-exhibition1-repeat" name="exhibition1-repeat" type="number" value="1" min="0" max="99" class="bg-white border rounded border-gray-300" />
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="js-exhibition1-edit" class="js-exhibition-operation cursor-pointer">
+                <div class="hidden">
+                    <div class="flex flex-col items-center absolute w-1/12 top-2 z-10">
+                    <div id="js-exhibition1-delete" class= "js-exhibition-delete cursor-pointer bg-gray-50 hover:bg-gray-200 py-1.5 px-2 rounded border text-red-600">
+                        <p class="pointer-events-none">削除</p>
+                    </div>
+                </div>
+                    
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 pointer-events-none">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                </svg>
 
+            </div>
+        </div>
+
+        <div id="js-add-exhibition" class="flex space-y-3 justify-between py-2 px-4 mb-4 bg-gray-50 border rounded-2xl border-gray-400 hover:opacity-80 text-gray-700">
+            <div  class="m-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 pointer-events-none">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="w-7/12 mx-auto mb-8">
+        <p class="text-gray-700 py-2">※展示実行中はここで設定したプロジェクトがループされます</p>
+    </div>
+        
+    <div class="flex w-9/12 mx-auto mb-16 justify-evenly">
+        <a class="px-16 py-2 text-lg text-center text-gray-700 bg-gray-300 shadow rounded-2xl hover:opacity-80"
+        href="{% url 'hakusai:exhibition_list' %}">
+            キャンセル
+        </a>   
+        
+        <button type="submit" class="px-16 py-2 text-lg text-center text-gray-100 bg-blue-500 shadow rounded-2xl hover:opacity-80">
+            作成
+        </button>
+    </div>
+    {% csrf_token %}
+</form>
+<script src="{% static 'hakusai/js/exhibition_new.js' %}"></script>
 
 {% endblock %}

@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=100, verbose_name="展示名")),
-                ("memo", models.CharField(max_length=300, verbose_name="メモ")),
+                ("memo", models.CharField(max_length=300, null=True, verbose_name="メモ")),
                 ("created_date_time", models.DateTimeField(verbose_name="作成日時")),
                 (
                     "delete_flag",
@@ -106,6 +106,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         to="hakusai.projects",
+                        null=True,
                     ),
                 ),
             ],
