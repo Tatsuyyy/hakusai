@@ -9,5 +9,5 @@ class ProjectListView(TemplateView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['title'] = 'プロジェクト一覧'
-        context['projects'] = Projects.objects.all() # Projectsの全レコードをセット
+        context['projects'] = Projects.objects.filter(delete_flag=False) # Projectsの削除されていないレコードをセット
         return context
