@@ -8,7 +8,6 @@ from selenium.common.exceptions import NoSuchElementException, NoSuchWindowExcep
 from hakusai.models import Exhibitions, VExhibitionList, VProjectSteps
 from hakusai.scraping.DriverClass import Driver
 
-
 class ExhibitionRunView(TemplateView):
     template_name = 'hakusai/exhibition_run.html'
     stop_event = threading.Event()
@@ -19,7 +18,6 @@ class ExhibitionRunView(TemplateView):
         id = kwargs["exhibition_id"]
         context["project_urls"] = [item.url for item in VExhibitionList.objects.filter(exhibitions_id=id)]
         context["exhibition"] = Exhibitions.objects.filter(id=id).first()
-        print(context["project_urls"])
         return context
 
     # POST送信を受け取ったときの処理
@@ -27,49 +25,51 @@ class ExhibitionRunView(TemplateView):
         data = json.loads(request.body)
         if (data["operation"] == 'start'):
             id = kwargs["exhibition_id"]
-            project_ids = [
-                item.project_id for item in VExhibitionList.objects.filter(exhibitions_id=id)]
-            steps = VProjectSteps.objects.filter(
-                project_id__in=project_ids).order_by('exec_order')
+            projects = [
+                item for item in VExhibitionList.objects.filter(exhibitions_id=id).order_by('exec_order')]
             scraping_thread = threading.Thread(
-                target=lambda: self.scraping_start(steps), daemon=True)
+                target=lambda: self.scraping_start(projects), daemon=True)
             scraping_thread.start()
         elif (data["operation"] == 'stop'):
             self.scraping_stop()
         return http.JsonResponse({"res": data["operation"]})
 
-    def scraping_start(self, steps):
+    def scraping_start(self, projects):
         self.stop_event.clear()
-        driver = Driver()
+
         while True:
             try:
-                for step in steps:
-                    # ページ遷移の必要があるかどうか
-                    if driver.url != step.url:
-                        driver.access_url(step.url)
+                for project in projects:
+                    steps = VProjectSteps.objects.filter(project_id=project.project_id).order_by('exec_order')        
+                    driver = Driver()
+                    driver.access_url(project.url)
+                
+                    for step in steps:
+                        # stepの処理
+                        if self.stop_event.is_set():
+                            driver.end()
+                            break
+                        elif driver.translate_action_name(step.action_name) == 'click':
+                            driver.click(step.xpath)
+                        elif driver.translate_action_name(step.action_name) == 'insert':
+                            driver.insert_data(step.xpath, step.action_str)
+                        elif driver.translate_action_name(step.action_name) == 'insert_and_enter':
+                            driver.insert_and_enter(step.xpath, step.action_str)
+                        elif driver.translate_action_name(step.action_name) == 'wait':
+                            driver.wait(step.action_str)
+                        elif driver.translate_action_name(step.action_name) == 'scroll':
+                            driver.scrollByElem(step.xpath)
+                        else:
+                            pass
+                        # 2秒待機
+                        time.sleep(2)
 
-                    # stepの処理
                     if self.stop_event.is_set():
-                        driver.end()
+                        # 終了ボタンが押されたら無限ループから抜け出す
                         break
-                    elif driver.translate_action_name(step.action_name) == 'click':
-                        driver.click(step.xpath)
-                    elif driver.translate_action_name(step.action_name) == 'insert':
-                        driver.insert_data(step.xpath, step.action_str)
-                    elif driver.translate_action_name(step.action_name) == 'insert_and_enter':
-                        driver.insert_and_enter(step.xpath, step.action_str)
-                    elif driver.translate_action_name(step.action_name) == 'wait':
-                        driver.wait(step.action_str)
-                    elif driver.translate_action_name(step.action_name) == 'scroll':
-                        driver.scrollByElem(step.xpath)
-                    else:
-                        pass
-                    # 2秒待機
-                    time.sleep(2)
-
-                if self.stop_event.is_set():
-                    # 終了ボタンが押されたら無限ループから抜け出す
-                    break
+                else:
+                    continue
+                break
             except NoSuchElementException:
                 print(f"{step.xpath}は存在しません")
                 driver.end()

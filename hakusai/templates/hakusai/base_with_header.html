@@ -2,17 +2,22 @@
 
 {% block additional %}
 <!-- ヘッダー -->
-    <div class="flex space-x-6 items-center justify-start h-28 mx-20 bg-green-50">
-        <!-- ヘッダーアイコン -->
-        {% block content_header_icon %}{% endblock %}
+    <div class="w-full h-40">
+        <div class=" flex space-x-6 items-center h-1/3 bg-gray-50 border border-b-gray-300">
+            <a href="/"><p class="mx-10 text-3xl font-sans font-semibold text-gray-700">hakusai</p></a></div>
+        <div class="flex space-x-6 items-center justify-start h-2/3 mx-20 bg-green-50">
 
-        <!-- ヘッダータイトル -->
-        <p class="w-60 text-2xl leading-10 text-gray-600">
+            <!-- ヘッダーアイコン -->
+            {% block content_header_icon %}{% endblock %}
+
+            <!-- ヘッダータイトル -->
+            <p class="w-60 text-2xl leading-10 text-gray-600">
             {% with content_header_title=title %}{{ content_header_title }}{% endwith %}
         </p>
 
         <!-- ヘッダー要素(ボタン等) -->
         {% block content_header_item %}{% endblock %}
+        </div>
     </div>
 
 {% endblock %}

@@ -56,7 +56,6 @@ class ExhibitionSettings(Model):
 class VProjectSteps(Model):
     project_id = models.BigIntegerField(primary_key=True)
     exec_order = models.PositiveIntegerField()
-    url = models.CharField(max_length=300)
     xpath = models.CharField(max_length=200)
     action_name = models.CharField(max_length=100)
     action_str = models.CharField(max_length=100, null=True, blank=True)

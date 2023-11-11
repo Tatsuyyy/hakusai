@@ -36,7 +36,6 @@
                 <div class="w-full flex mt-2 mb-4 text-xl">
                     <p id="js-step1-order" class="text-gray-700">step1:</p>
                     <select id="js-step1-action-name" name="step1-action-name" onchange="handleSelectChange(event)" class="border border-gray-300 rounded mx-2" required>
-                        <!--<option value="クリック" selected class="text-gray-400" >クリック</option>-->
                         {% for action in actions %}
                             <option value="{{ action }}" class="text-gray-700">{{ action }}</option>
                         {% endfor %}
@@ -75,7 +74,7 @@
         </div>
 
         <div id="js-add-step" class="flex space-y-3 justify-between py-2 px-4 mb-4 bg-gray-50 border rounded-2xl border-gray-400 hover:opacity-80 text-gray-700">
-            <div  class="m-auto">
+            <div class="m-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-14 h-14 pointer-events-none">
                     <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" clip-rule="evenodd" />
                 </svg>

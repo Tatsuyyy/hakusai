@@ -9,25 +9,32 @@ class ProjectEditView(TemplateView):
     template_name = 'hakusai/project_edit.html'
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        current_project_id = self.kwargs['project_id'] # 編集中のprojectのid
+        # 編集中のprojectのid
+        current_project_id = self.kwargs['project_id'] 
         current_project = Projects.objects.get(id=current_project_id)
         context = super().get_context_data(**kwargs)
         context['title'] = 'プロジェクト編集'
         context['project_name'] = current_project.name
         context['project_url'] = current_project.url
-        context['steps'] = Steps.objects.filter(project_id=current_project_id) # Stepsからproject_idが一致するレコードのみ取得
+        # Stepsからproject_idが一致するレコードのみ取得
+        context['steps'] = Steps.objects.filter(project_id=current_project_id)
         context['actions'] = Actions.objects.values_list('name', flat=True)
         return context
 
     # POST送信を受け取ったときの処理
     def post(self, request: http.HttpRequest, *args: Any, **kwargs: Any) -> http.HttpResponse:
-        current_project_id = self.kwargs['project_id'] # 編集中のprojectのid
-
+        # 編集中のprojectのid
+        current_project_id = self.kwargs['project_id']
+        submit_type = request.POST.get('submit-type')
+        if submit_type == 'previous':
+            return redirect('hakusai:project_list')
+        
         # 更新前のstep数
-        before_step_count = Steps.objects.filter(project_id=current_project_id).aggregate(Max('exec_order'))['exec_order__max']
+        before_step_count = Steps.objects.filter(project_id=current_project_id).aggregate(Max('exec_order'))['exec_order__max'] or 0
         # 更新後のstep数
         after_step_count = sum(1 for key in request.POST if key.endswith('xpath'))
         # 更新前後のstep数を比較し、大きいほうをループ回数用変数に代入
+        print(before_step_count, after_step_count)
         loop_count = max(before_step_count, after_step_count)
 
         for i in range(1, loop_count + 1):
@@ -43,7 +50,6 @@ class ProjectEditView(TemplateView):
 
         current_project = Projects.objects.get(id=current_project_id)
         # クリックされたボタンの状態を取得し対応する処理を実行
-        submit_type = request.POST.get('submit-type')
         if submit_type == 'cancel':
             current_project.delete_flag = True
             current_project.draft_flag = False
@@ -51,7 +57,8 @@ class ProjectEditView(TemplateView):
             current_project.delete_flag = False
             current_project.draft_flag = True
         elif submit_type == 'submit':
-            current_project.delete_flag =False
+            current_project.delete_flag = False
             current_project.draft_flag = False
         current_project.save()
-        return redirect('hakusai:project_list') # プロジェクト一覧画面に遷移
+        # プロジェクト一覧画面に遷移
+        return redirect('hakusai:project_list')

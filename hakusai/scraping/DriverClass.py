@@ -7,13 +7,12 @@ from selenium.webdriver.common.keys import Keys
 import time
 from hakusai.scraping.StepClass import Step
 
-
 class Driver():
     def __init__(self):
-        chrome_service = fs.Service(executable_path='static/edit/driver/chromedriver.exe')
+        chrome_service = fs.Service(executable_path='static/hakusai/driver/chromedriver.exe')
         browser = webdriver.Chrome(service=chrome_service)
         self.browser = browser
-        self.url = ''
+        self.url = ""
         self.translate = {'クリック': 'click', '文字入力': 'insert', '文字入力後Enter': 'insert_and_enter', '待つ': 'wait', 'スクロール': 'スクロール'}
 
     def access_url(self, url):
