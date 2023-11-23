@@ -1,5 +1,4 @@
 from .IndexViewClass import IndexView as IndexView
-
 from .ExhibitionListViewClass import ExhibitionListView as ExhibitionListView
 from .ExhibitionDetailViewClass import ExhibitionDetailView as ExhibitionDetailView
 from .ExhibitionNewViewClass import ExhibitionNewView as ExhibitionNewView

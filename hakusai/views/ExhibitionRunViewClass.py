@@ -37,11 +37,11 @@ class ExhibitionRunView(TemplateView):
     def scraping_start(self, projects):
         self.stop_event.clear()
 
+        driver = Driver()
         while True:
             try:
                 for project in projects:
                     steps = VProjectSteps.objects.filter(project_id=project.project_id).order_by('exec_order')        
-                    driver = Driver()
                     driver.access_url(project.url)
                 
                     for step in steps:
