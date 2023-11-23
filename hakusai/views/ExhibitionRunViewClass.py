@@ -56,7 +56,7 @@ class ExhibitionRunView(TemplateView):
                         elif driver.translate_action_name(step.action_name) == 'insert_and_enter':
                             driver.insert_and_enter(step.xpath, step.action_str)
                         elif driver.translate_action_name(step.action_name) == 'wait':
-                            driver.wait(step.action_str)
+                            driver.wait(int(step.action_str))
                         elif driver.translate_action_name(step.action_name) == 'scroll':
                             driver.scrollByElem(step.xpath)
                         else:

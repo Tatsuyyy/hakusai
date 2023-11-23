@@ -11,7 +11,7 @@ class Driver():
         browser = webdriver.Chrome()
         self.browser = browser
         self.url = ""
-        self.translate = {'クリック': 'click', '文字入力': 'insert', '文字入力後Enter': 'insert_and_enter', '待つ': 'wait', 'スクロール': 'スクロール'}
+        self.translate = {'クリック': 'click', '文字入力': 'insert', '文字入力後Enter': 'insert_and_enter', '待つ': 'wait', 'スクロール': 'scroll'}
 
     def access_url(self, url):
         self.url = url
@@ -45,7 +45,7 @@ class Driver():
 
     def scrollByElem(self, xpath: str):
         elem = self.select_xpath(xpath)
-        self.driver.execute_script("arguments[0].scrollIntoView();", elem)
+        self.browser.execute_script("arguments[0].scrollIntoView();", elem)
 
     def wait(self, wait_time: int):
         time.sleep(wait_time)

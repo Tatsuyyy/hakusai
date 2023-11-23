@@ -162,7 +162,7 @@ const stepDelete = (e) => {
 
 // Selectの文字入力が選ばれた時用の処理
 const handleSelectChange = (e) => {
-  if (e.target.value === "文字入力" || e.target.value === "文字入力後Enter") {
+  if (e.target.value === "文字入力" || e.target.value === "文字入力後Enter" || e.target.value === "待つ") {
     e.target.parentNode
       .getElementsByTagName("input")[0]
       .removeAttribute("disabled");
