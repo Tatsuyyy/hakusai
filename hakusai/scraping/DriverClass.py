@@ -6,12 +6,19 @@ from selenium.webdriver.common.keys import Keys
 import time
 from hakusai.scraping.StepClass import Step
 
-class Driver():
+
+class Driver:
     def __init__(self):
         browser = webdriver.Chrome()
         self.browser = browser
         self.url = ""
-        self.translate = {'クリック': 'click', '文字入力': 'insert', '文字入力後Enter': 'insert_and_enter', '待つ': 'wait', 'スクロール': 'scroll'}
+        self.translate = {
+            "クリック": "click",
+            "文字入力": "insert",
+            "文字入力後Enter": "insert_and_enter",
+            "待つ": "wait",
+            "スクロール": "scroll",
+        }
 
     def access_url(self, url):
         self.url = url
@@ -43,9 +50,9 @@ class Driver():
         elem.send_keys(content)
         elem.send_keys(Keys.ENTER)
 
-    def scrollByElem(self, xpath: str):
+    def scroll_by_elem(self, xpath: str):
         elem = self.select_xpath(xpath)
-        self.browser.execute_script("arguments[0].scrollIntoView();", elem)
+        self.browser.execute_script("arguments[0].scrollIntoView({ behavior: 'smooth' });", elem)
 
     def wait(self, wait_time: int):
         time.sleep(wait_time)
